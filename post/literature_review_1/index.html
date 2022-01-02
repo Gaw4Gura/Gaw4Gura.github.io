@@ -1,0 +1,1223 @@
+<!DOCTYPE html><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.3.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Shuoyu Wang" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="本文调查了已有的一些基于计算机视觉的微小振动检测方法，其中包括传统方法也包括神经网络方法 。" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://Gaw4Gura.github.io/post/literature_review_1/" />
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.f1ecf783c14edc00c9320c205831ad8e.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha512-W0xM4mr6dEP9nREo7Z9z+9X70wytKvMGeDsj7ps2+xg5QPrEBXC8tAW1IFnzjR6eoJ90JmCnFzerQJTLzIEHjA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.7fa18a541b489204d14a3f8fd75bb3b5.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/manifest.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="https://Gaw4Gura.github.io/post/literature_review_1/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="Academic" />
+  <meta property="og:url" content="https://Gaw4Gura.github.io/post/literature_review_1/" />
+  <meta property="og:title" content="位移检测与振动测量 | Academic" />
+  <meta property="og:description" content="本文调查了已有的一些基于计算机视觉的微小振动检测方法，其中包括传统方法也包括神经网络方法 。" /><meta property="og:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+    <meta property="twitter:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2022-01-01T23:16:56&#43;08:00"
+      />
+    
+    <meta property="article:modified_time" content="2022-01-01T23:16:56&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Gaw4Gura.github.io/post/literature_review_1/"
+  },
+  "headline": "位移检测与振动测量",
+  
+  "datePublished": "2022-01-01T23:16:56+08:00",
+  "dateModified": "2022-01-01T23:16:56+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Shuoyu Wang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Academic",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "本文调查了已有的一些基于计算机视觉的微小振动检测方法，其中包括传统方法也包括神经网络方法 。"
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>位移检测与振动测量 | Academic</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="fe2309bc74bc01a69688b9bc5f02ae68" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.2da3b1fa37e894630bf6de39b1b694b3.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Academic</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Academic</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>位移检测与振动测量</h1>
+
+  
+  <p class="page-subtitle">文献综述1：基于计算机视觉的微小振动检测方法</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      Shuoyu Wang</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 1, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/dissertation/">dissertation</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="传统的基于视觉的振动测量方法">传统的基于视觉的振动测量方法</h2>
+<p>在结构安全监测领域，振动测量在预测潜在灾害和对设计维护活动的结构参数估计方面都起着至关重要的作用。大量的监测技术可用于结构振动监测，而应用最广泛的可能是基于加速度计的测量和形变估计。虽然这些技术适用于大多数应用，但它们在特定应用中存在一些限制，例如在钢梁这样细长的结构中，非接触式测量技术将是首选。这样可以避免负载效应，并可以使得振动的测量在许多方位同时进行。基于视觉的振动测量有许多好处，例如可以在不使用插值的情况下测量振动最大或是最小的点，并且只要结构仍然落在相机镜头内也不需要改变试验设备的位置 [1].</p>
+<p>[1]中介绍了一种由单个传感器（相机）进行监控的基于视觉的细长结构阻尼振动的测量方案。该工作使用边缘检测的方法来识别电缆结构，其中，“边缘”在灰度图像中可以被定义为灰度突变的像素点的集合。考虑到待测量振动的物体通常是一体的，该方法可以被推广到更一般的物体的振动测量中。文章中提到的方法在实践里有两个要求：</p>
+<ul>
+<li>摄像机应该与待测物体平行</li>
+<li>摄像机的采样频率应该至少为电缆阻尼振动频率的两倍，即采样定理</li>
+</ul>
+<p>采集到图像以后，系统通过五个步骤来得到电缆阻尼振动的估计：</p>
+<ul>
+<li>电缆的边缘像素由每一帧图像进行边缘检测获得</li>
+<li>通过对像素坐标进行线性拟合来消除数据中的噪声以及量化误差的影响</li>
+<li>迭代以上两步，直到电缆边缘所有像素的坐标</li>
+<li>在时域中重建每个点的垂直位移</li>
+<li>对信号进行傅里叶变换，并在频域中估计每个点的水平位移</li>
+</ul>
+<p>图1展示了这个系统的工作原理。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./5341309-fig-2-source-small.gif" alt="图1 [1]. (a)对电缆的边缘检测。(b)对边缘像素进行线性拟合。(c)阻尼运动振幅的估计" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>[2]介绍了基于多台摄像头和一台笔记本电脑的桥梁结构监测系统。通过摄像头捕捉桥梁结构的边缘和铆钉等标志物，并且通过一种被称为方向码匹配（Orientation Code Matching, OCM）的算法进行视频处理。该算法基于匹配梯度信息，围绕每个像素以方向码的形式计算，而不是直接计算灰度级来进行边缘检测。对于像素$I(x,y)$，其水平和垂直方向的方向导数分别为$\nabla I_{x}=\frac{\partial I}{\partial x},\nabla I_{y}=\frac{\partial I}{\partial y}$.使用$\tan^{-1}(\nabla I_{y}/\nabla I_{x})$定义$I(x,y)$的方位角，通过灰度阈值$\Gamma$，可以得到方向角的高斯表示。随后，可以利用测量函数对方向码进行匹配和测量。在使用振动的桌子对系统进行测试的时候，预先设计的黑白目标面板（216 mm × 280 mm）固定在电磁振动台上，传统方法安装在振动台和固定参考点之间。在距振动台 5.5 米的静止位置放置一个带有 75 毫米镜头的摄像机。相机以每秒 60 帧的速度捕捉目标面板，并通过在连接的计算机上执行 OCM 技术和像素级分析来检测目标面板的位移。在测量之前，使用预先设计的目标面板测量数字图像的实际像素大小。像素的尺寸校准为 0.54 毫米/像素，测量误差的理论值为 0.27 毫米 [2]。在实际应用中，还应该考虑自然环境对系统的影响。</p>
+<p>[3]利用振动学的基础知识（杨氏模量等）和机器视觉检测物体的细微运动，并从中推断物体的材料特性。[4] (1993)则介绍了递归神经网络（RNN）在检测轴承运动中的应用。[5]提出了一种基于多摄像头系统的多散斑匹配（multi speckle matching）方法，采用该方法计算不同相机坐标的旋转矩阵和平移矩阵。 将所有相机的测量点转换为相同的坐标系并构建 3D 形状。 通过减去平移前后的坐标得到全场位移。 使用多相机系统进行铝板测量。结果表明位移场转换误差小于0.1mm。</p>
+<h2 id="新型基于深度学习的位移与振动测量方法">新型基于深度学习的位移与振动测量方法</h2>
+<p>[6]介绍了一个基于YOLO v3$^{*}$的社交距离测量方案。该方案以摄像头的视频帧为输入，采用基于YOLO v3算法的开源物体检测预训练模型进行行人检测。随后，视频帧被转换为自上而下的视图，用于与 2D平面的距离测量，以估计人与人之间的距离。图2展示了这个算法的流程图：</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./9243478-fig-2-source-small.gif" alt="图2 [6]. 基于YOLO v3进行社交距离测量算法流程图" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>利用经过COCO数据集（含有人类以及行人类别）训练的YOLO v3网络对行人进行目标识别，得到行人的<strong>bounding_box</strong>的中心坐标$(x,y)$，宽高$(w,h)$，目标置信度以及类别标签。尽管YOLO v3可以进行多种目标的检测，但是在本文的工作中，系统将忽略其余目标物，只关注行人类别的对象。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./9243478-fig-4-source-small.gif" alt="图3 [6]. 将透视图转化为俯视图" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>街道图像的专注区域（region of interest, ROI）被转换为包含480×480像素的自上而下的2D视图，如图3所示。通过应用相机视图校准，计算透视图变成自上而下的视图。在OpenCV中，透视变换是一种简单的相机校准方法，它涉及在透视图中选择四个点并将它们映射到2D图像视图中的矩形的角上。 假设每个人都站在同一水平平面上。行人之间的实际距离对应于自顶向下视图中的像素数可以估计。最后，利用两个行人的<strong>bounding_box</strong>中心的距离$d=\sqrt{(x_{1}-x_{2})^{2}+(y_{1}-y_{2})^{2}}$以及相机的缩放倍数可以计算得到行人之间的社交距离。</p>
+<p>[7]则介绍了基于Mask R-CNN$^{*}$的在实验室实验中自动跟踪和测量结构试件位移和振动的系统。Mask R-CNN可以从固定摄像机录制的视频中定位目标并监控其运动。 为了提高精度和去除噪声，包括了尺度不变特征变换（Scale-invariant Feature Transform, SIFT）和各种用于信号处理的滤波器等技术。作者利用三个小型钢筋混凝土梁的试验和振动台试验来验证所提出的方法。结果表明，所提出的深度学习方法可以实现在实验室实验中自动精确测量被测结构构件的运动的目标。图4为这种Mask R-CNN的结构：</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./bai1-p4-bai-small.gif" alt="图4 [7]. 用于追踪物体位移和振动的Mask R-CNN网络结构。" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>图5展示了该算法的流程图：</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./bai3-p4-bai-small.gif" alt="图5 [7]. 利用Mask R-CNN对钢筋混凝土梁位移与振动进行追踪的算法流程图。" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>不妨令$d_{u}^{j},d_{v}^{j}$表示第一帧物体的<strong>bounding_box</strong>和第$j$帧物体的<strong>bounding_box</strong>之间水平以及竖直方向上的位移分量，$s$表示从像素转化为长度单位的比例，则物体的实际位移可以表示为$d_{x}^{j}=s\cdot d_{u}^{j}$以及$d_{y}^{j}=s\cdot d_{v}^{j}$.其中，当<strong>bounding_box</strong>不能很好地拟合物体的实际边框时，作者利用SIFT算法将<strong>bounding_box</strong>重新与物体进行匹配。图6阐明了该算法的工作原理。</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./bai2-p4-bai-large.gif" alt="图6 [7]. 对&lt;strong&gt;bounding_box&lt;/strong&gt;进行SIFT算法重新匹配。" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>$^{*}$：关于YOLO v3等用于实现目标识别或边缘检测的神经网络结构将在之后的文章中学习与介绍。</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>根据文献[1 &ndash; 7]，基于视觉的振动和位移测量具有广阔的应用空间，并在表现上优于传统方法。而根据[6], [7]，基于深度学习的方法又在基于传统计算机视觉的方法上更进一步。除了上述文献，图像处理技术（image processing technique）[8]，上采样互相关技术（up-sampled cross correlation）[9]，自适应关注区域算法（adaptive Region of Interest algorithm）[10]，改进的泰勒近似（modified Taylor approximation）[11]，使用加速鲁棒特征（Speeded-Up Robust Features, SURF）的轮廓提取[12]等技术[13 &ndash; 20]也需要进一步的学习与研究。</p>
+<h3 id="references">References</h3>
+<p>[1] G. Busca, A. Cigada, A. Manenti and E. Zappa, &ldquo;Vision-based measurements for slender structures vibration monitoring,&rdquo; 2009 IEEE Workshop on Environmental, Energy, and Structural Monitoring Systems, 2009, pp. 98-102, doi: 10.1109/EESMS.2009.5341309.</p>
+<p>[2] Y. Fukuda, M. Q. Feng, Y. Narita, S. Kaneko and T. Tanaka, &ldquo;Vision-Based Displacement Sensor for Monitoring Dynamic Response Using Robust Object Search Algorithm,&rdquo; in IEEE Sensors Journal, vol. 13, no. 12, pp. 4725-4732, Dec. 2013, doi: 10.1109/JSEN.2013.2273309.</p>
+<p>[3] A. Davis, K. L. Bouman, J. G. Chen, M. Rubinstein, F. Durand and W. T. Freeman, &ldquo;Visual vibrometry: Estimating material properties from small motions in video,&rdquo; 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2015, pp. 5335-5343, doi: 10.1109/CVPR.2015.7299171.</p>
+<p>[4] I. E. Alguindigue, A. Loskiewicz-Buczak and R. E. Uhrig, &ldquo;Monitoring and diagnosis of rolling element bearings using artificial neural networks,&rdquo; in IEEE Transactions on Industrial Electronics, vol. 40, no. 2, pp. 209-217, April 1993, doi: 10.1109/41.222642.</p>
+<p>[5] T. Hu, L. Ma, D. Jiang and Q. Fei, &ldquo;Multi-camera based full-field 3D displacement measurement using digital image correlation,&rdquo; 2020 13th International Symposium on Computational Intelligence and Design (ISCID), 2020, pp. 164-167, doi: 10.1109/ISCID51228.2020.00043.</p>
+<p>[6] Y. C. Hou, M. Z. Baharuddin, S. Yussof and S. Dzulkifly, &ldquo;Social Distancing Detection with Deep Learning Model,&rdquo; 2020 8th International Conference on Information Technology and Multimedia (ICIMU), 2020, pp. 334-338, doi: 10.1109/ICIMU49871.2020.9243478.</p>
+<p>[7] Y. Bai, R. M. Abduallah, H. Sezen and A. Yilmaz, &ldquo;Automatic Displacement and Vibration Measurement in Laboratory Experiments with A Deep Learning Method,&rdquo; 2021 IEEE Sensors, 2021, pp. 1-4, doi: 10.1109/SENSORS47087.2021.9639455.</p>
+<p>[8] J.-J. Lee and M. Shinozuka, &ldquo;Real-time displacement measurement of a flexible bridge using digital image processing techniques&rdquo;, <em>Experimental mechanics</em>, vol. 46, no. 1, pp. 105-114, 2006.</p>
+<p>[9] D. Feng, M. Q. Feng, E. Ozer and Y. Fukuda, &ldquo;A vision-based sensor for noncontact structural displacement measurement&rdquo;, <em>Sensors</em>, vol. 15, no. 7, pp. 16557-16575, 2015.</p>
+<p>[10] J. Lee, K.-C. Lee, S. Cho and S.-H. Sim, &ldquo;Computer vision-based structural displacement measurement robust to light-induced image degradation for in-service bridges&rdquo;, <em>Sensors</em>, vol. 17, no. 10, pp. 2317, 2017.</p>
+<p>[11] B. Liu, D. Zhang and J. Guo, &ldquo;Vision-based displacement measurement sensor using modified taylor approximation approach&rdquo;, <em>Optical Engineering</em>, vol. 55, no. 11, pp. 114103, 2016.</p>
+<p>[12] Z. Yin, C. Wu and G. Chen, &ldquo;Concrete crack detection through full-field displacement and curvature measurements by visual mark tracking: A proof-of-concept study&rdquo;, <em>Structural Health Monitoring</em>, vol. 13, no. 2, pp. 205-218, 2014.</p>
+<p>[13] J. Guo and C. Zhu, &ldquo;Dynamic displacement measurement of largescale structures based on the lucas–kanade template tracking algorithm&rdquo;, <em>Mechanical Systems and Signal Processing</em>, vol. 66, pp. 425-436, 2016.</p>
+<p>[14] C.-Z. Dong, O. Celik and F. N. Catbas, &ldquo;Marker-free monitoring of the grandstand structures and modal identification using computer vision methods&rdquo;, <em>Structural Health Monitoring</em>, vol. 18, no. 5-6, pp. 1491-1509, 2019.</p>
+<p>[15] J. Hu and P. F. Pai, &ldquo;Experimental study of resonant vibrations of suspended steel cables using a 3d motion analysis system&rdquo;, <em>Journal of Engineering Mechanics</em>, vol. 138, no. 6, pp. 640-661, 2012.</p>
+<p>[16] J. G. Chen, A. Davis, N. Wadhwa, F. Durand, W. T. Freeman and O. Büyüköztürk, &ldquo;Video camera–based vibration measurement for civil infrastructure applications&rdquo;, <em>Journal of Infrastructure Systems</em>, vol. 23, no. 3, pp. B4016013, 2017.</p>
+<p>[17] V. Hoskere, J.-W. Park, H. Yoon and B. F. Spencer, &ldquo;Vision-based modal survey of civil infrastructure using unmanned aerial vehicles&rdquo;, <em>Journal of Structural Engineering</em>, vol. 145, no. 7, pp. 04019062, 2019.</p>
+<p>[18] C.-Z. Dong, O. Celik, F. N. Catbas, E. J. O’Brien and S. Taylor, &ldquo;Structural displacement monitoring using deep learning-based full field optical flow methods&rdquo;, <em>Structure and Infrastructure Engineering</em>, vol. 16, no. 1, pp. 51-71, 2020.</p>
+<p>[19] C.-Z. Dong and F. N. Catbas, &ldquo;A non-target structural displacement measurement method using advanced feature matching strategy&rdquo;, <em>Advances in Structural Engineering</em>, vol. 22, no. 16, pp. 3461-3472, 2019.</p>
+<p>[20] C.-Z. Dong, O. Celik, F. N. Catbas, E. OBrien and S. Taylor, &ldquo;A robust vision-based method for displacement measurement under adverse environmental factors using spatio-temporal context learning and taylor approximation&rdquo;, <em>Sensors</em>, vol. 19, no. 14, pp. 3197, 2019.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/displacement-and-vibration-measurement/">displacement and vibration measurement</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://Gaw4Gura.github.io/post/literature_review_1/&amp;text=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://Gaw4Gura.github.io/post/literature_review_1/&amp;t=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f&amp;body=https://Gaw4Gura.github.io/post/literature_review_1/" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://Gaw4Gura.github.io/post/literature_review_1/&amp;title=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f%20https://Gaw4Gura.github.io/post/literature_review_1/" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://Gaw4Gura.github.io/post/literature_review_1/&amp;title=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    <script src="/js/vendor-bundle.min.b73dfaac3b6499dc997741748a7c3fe2.js"></script>
+
+    
+    
+    
+      
+      
+        <script src="https://cdn.jsdelivr.net/gh/desandro/imagesloaded@v4.1.4/imagesloaded.pkgd.min.js" integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/metafizzy/isotope@v3.0.6/dist/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+
+      
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/highlight.min.js" integrity="sha512-Ypjm0o7jOxAd4hpdoppSEN0TQOC19UtPAqD+4s5AlXmUvbmmS/YMxYqAqarQYyxTnB6/rqip9qcxlNB/3U9Wdg==" crossorigin="anonymous"></script>
+        
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/r.min.js" crossorigin="anonymous"></script>
+        
+      
+
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.7cd6ec29d281a73c92a2958a1584aadc.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>

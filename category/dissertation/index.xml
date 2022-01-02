@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts | Academic</title>
-    <link>https://Gaw4Gura.github.io/post/</link>
-      <atom:link href="https://Gaw4Gura.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    <description>Posts</description>
+    <title>dissertation | Academic</title>
+    <link>https://Gaw4Gura.github.io/category/dissertation/</link>
+      <atom:link href="https://Gaw4Gura.github.io/category/dissertation/index.xml" rel="self" type="application/rss+xml" />
+    <description>dissertation</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jan 2022 23:16:56 +0800</lastBuildDate>
     <image>
       <url>https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>Posts</title>
-      <link>https://Gaw4Gura.github.io/post/</link>
+      <title>dissertation</title>
+      <link>https://Gaw4Gura.github.io/category/dissertation/</link>
     </image>
     
     <item>
@@ -192,22 +192,6 @@
 &lt;p&gt;[18] C.-Z. Dong, O. Celik, F. N. Catbas, E. J. O’Brien and S. Taylor, &amp;ldquo;Structural displacement monitoring using deep learning-based full field optical flow methods&amp;rdquo;, &lt;em&gt;Structure and Infrastructure Engineering&lt;/em&gt;, vol. 16, no. 1, pp. 51-71, 2020.&lt;/p&gt;
 &lt;p&gt;[19] C.-Z. Dong and F. N. Catbas, &amp;ldquo;A non-target structural displacement measurement method using advanced feature matching strategy&amp;rdquo;, &lt;em&gt;Advances in Structural Engineering&lt;/em&gt;, vol. 22, no. 16, pp. 3461-3472, 2019.&lt;/p&gt;
 &lt;p&gt;[20] C.-Z. Dong, O. Celik, F. N. Catbas, E. OBrien and S. Taylor, &amp;ldquo;A robust vision-based method for displacement measurement under adverse environmental factors using spatio-temporal context learning and taylor approximation&amp;rdquo;, &lt;em&gt;Sensors&lt;/em&gt;, vol. 19, no. 14, pp. 3197, 2019.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hello_world</title>
-      <link>https://Gaw4Gura.github.io/post/hello_world/</link>
-      <pubDate>Thu, 30 Dec 2021 22:50:25 +0800</pubDate>
-      <guid>https://Gaw4Gura.github.io/post/hello_world/</guid>
-      <description>&lt;h1 id=&#34;hello-world&#34;&gt;Hello, world!&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include &amp;lt;iostream&amp;gt;
-
-int main() {
-    std::cout &amp;lt;&amp;lt; &amp;quot;Hello, world!&amp;quot; &amp;lt;&amp;lt; std::endl;
-    return 0;
-}
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
