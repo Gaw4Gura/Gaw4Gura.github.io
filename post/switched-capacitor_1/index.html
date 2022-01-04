@@ -60,10 +60,10 @@
   
     
   
-  <meta name="description" content="Bachelor Student, Microelectronics Science and Technology" />
+  <meta name="description" content="This post is an introduction to the background and the principles of a switched-capacitor circuit. The article is organized as follows. The first part answers why we need switched-capacitor circuits and why we use capacitors instead of resistors. The second part introduces two different switched-capacitor circuits and proposes their noises and gains. The final part reports the schematic diagram of an amplifier for a 10-bit S/H circuit." />
 
   
-  <link rel="alternate" hreflang="en-us" href="https://Gaw4Gura.github.io/post/" />
+  <link rel="alternate" hreflang="en-us" href="https://Gaw4Gura.github.io/post/switched-capacitor_1/" />
 
   
   
@@ -271,8 +271,6 @@
   
 
   
-    <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Academic" />
-  
 
   
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -281,7 +279,7 @@
   <link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
 
-  <link rel="canonical" href="https://Gaw4Gura.github.io/post/" />
+  <link rel="canonical" href="https://Gaw4Gura.github.io/post/switched-capacitor_1/" />
 
   
   
@@ -304,33 +302,82 @@
   <meta property="twitter:card" content="summary" />
   
   <meta property="og:site_name" content="Academic" />
-  <meta property="og:url" content="https://Gaw4Gura.github.io/post/" />
-  <meta property="og:title" content="Posts | Academic" />
-  <meta property="og:description" content="Bachelor Student, Microelectronics Science and Technology" /><meta property="og:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+  <meta property="og:url" content="https://Gaw4Gura.github.io/post/switched-capacitor_1/" />
+  <meta property="og:title" content="An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ | Academic" />
+  <meta property="og:description" content="This post is an introduction to the background and the principles of a switched-capacitor circuit. The article is organized as follows. The first part answers why we need switched-capacitor circuits and why we use capacitors instead of resistors. The second part introduces two different switched-capacitor circuits and proposes their noises and gains. The final part reports the schematic diagram of an amplifier for a 10-bit S/H circuit." /><meta property="og:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
     <meta property="twitter:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
   
     
-      <meta property="og:updated_time" content="2022-01-03T21:06:41&#43;08:00" />
+      <meta
+        property="article:published_time"
+        content="2022-01-03T21:06:41&#43;08:00"
+      />
     
+    <meta property="article:modified_time" content="2022-01-03T21:06:41&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Gaw4Gura.github.io/post/switched-capacitor_1/"
+  },
+  "headline": "An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ",
+  
+  "datePublished": "2022-01-03T21:06:41+08:00",
+  "dateModified": "2022-01-03T21:06:41+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Shuoyu Wang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Academic",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "This post is an introduction to the background and the principles of a switched-capacitor circuit. The article is organized as follows. The first part answers why we need switched-capacitor circuits and why we use capacitors instead of resistors. The second part introduces two different switched-capacitor circuits and proposes their noises and gains. The final part reports the schematic diagram of an amplifier for a 10-bit S/H circuit."
+}
+</script>
+
+  
+
+  
+
   
 
   
 
 
 
-  
-
-  
 
 
-
-
-
-  <title>Posts | Academic</title>
+  <title>An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ | Academic</title>
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="6370009740e1eb2ee0b7974f10ecc91f" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="6db76a617c51f366555dca968eb782c8" >
 
   
   
@@ -590,7 +637,9 @@
   </div>
 
   <div class="page-body">
-    
+    <article class="article">
+
+  
 
 
 
@@ -608,63 +657,15 @@
   
   
   
-    
-  
-<div class="universal-wrapper pt-3">
-  <h1>Posts</h1>
+<div class="article-container pt-3">
+  <h1>An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ</h1>
 
   
-
-  
-</div>
-
-
-
-<div class="universal-wrapper">
-
+  <p class="page-subtitle">Background &amp; Principles</p>
   
 
-  
   
     
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/post/switched-capacitor_1/" >An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ</a>
-    </div>
-
-    
-    <a href="/post/switched-capacitor_1/"  class="summary-link">
-      <div class="article-style">
-        This post is an introduction to the background and the principles of a switched-capacitor circuit. The article is organized as follows. The first part answers why we need switched-capacitor circuits and why we use capacitors instead of resistors. The second part introduces two different switched-capacitor circuits and proposes their noises and gains. The final part reports the schematic diagram of an amplifier for a 10-bit S/H circuit.
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
 
 
 <div class="article-metadata">
@@ -707,22 +708,32 @@
 
 </div>
 
-      
-    </div>
-
     
 
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
+
+
+
+
+  
 </div>
 
-    
-  
-    
-      
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="part-1-background">Part 1. Background</h2>
+<h4 id="question-1-why-we-need-the-switched-capacitor-circuits">Question 1: Why we need the switched-capacitor circuits?</h4>
+<blockquote>
+<p>Conventional amplifiers with resistors have continuous analog inputs and continuous analog output. However, in A/D converters (ADCs), D/A converters (DACs), and other time-discrete circuits, sample and hold (S/H) circuits first sample the amplitude of the input signal in a certain time and hold the measurement until the post-processing is done. On the other hand, the capacitor can restore the amount of charge, so it can be a good candidate for the S/H circuits.</p>
+</blockquote>
+<h4 id="question-2-why-we-use-capacitors-instead-of-resistors">Question 2: Why we use capacitors instead of resistors?</h4>
+<blockquote>
+<p>Considering the capacitance of a switched-capacitor circuit at a sampling rate of $f_{s}$, the equivalent resistance $R_{eq}=1/(f_{s}C)$. Supposing that the $f_{s}=100kHz$ and the $C=0.1pF$, then $R_{eq}=100M\Omega$, such an enormous resistance can build large time-constant in small area.</p>
+</blockquote>
+<h2 id="part-2-the-basic-principles-of-the-switched-capacitor-circuits">Part 2. The basic principles of the switched-capacitor circuits</h2>
+<p>The following figure shows the two phases of a simplest switched-capacitor circuits.</p>
+<p>
 
 
 
@@ -736,192 +747,262 @@
 
 
 
-  
 
 
-<div class="media stream-item">
-  <div class="media-body">
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_1.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Considering an inverting amplifier circuit with a gain of $-R_{2}/R_{1}$. Dislike a bipolar amplifier, a CMOS amplifier must have a relatively large output impedance to obtain a large gain. However, the existence of $R_{2}$ can reduce the output impedance of the amplifier enormously. Thus, we replace the two resistors with two capacitors ($C_{1}$ and $C_{2}$ representatively), and now the gain of the new circuit should be $-C_{1}/C_{2}$. If we add three switches to the circuit, it can serve as a switched-capacitor circuit. The following figure explains the two phases of the switched-capacitor amplifier.</p>
+<p>
 
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/post/literature_review_1/" >位移检测与振动测量</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_2.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>Let&rsquo;s talk about the choice of the switches. The simplest sampling switch is an NMOS transistor. However, the swing of the input voltage can be limited to $V_{DD}/2$. A solution to this problem is change the NMOS transistor into a transmission gate composed of an NMOS transistor and a PMOS transistor by connecting their sources and drains. The equivalent resistance is $\frac{1}{\mu_{n}C_{ox}(W/L)_{N}(V_{DD}-V_{THN})-[\mu_{n}C_{ox}(W/L)_{N}-\mu_{p}C_{ox}(W/L)_{P}]V_{in}-\mu_{p}C_{ox}(W/L)_{P}\vert V_{THP}\vert}$.
+Notably, if $\mu_{n}C_{ox}(W/L)_{N}=\mu_{p}C_{ox}(W/L)_{P}$, the $R_{on, eq}$ is not related to $V_{in}$.</p>
+<p>Finally, the thermal noise of a sampling switch is $KT/C$.</p>
+<h2 id="part-3-switched-capacitor-integrators">Part 3. Switched-Capacitor Integrators</h2>
+<p>The following figure demonstrates the basic principles of a switched-capacitor integrator.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_3.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>As we can see, the transfer function of a switched-capacitor integrator is
+$$
+H(z)=\frac{z^{-1}}{1-z^{-1}}=\frac{1}{z-1}
+$$
+Similarly, we can design a switched-capacitor circuits with differential inputs.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_4.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p>The following few posts will record my progress of designing such a switched-capacitor integrator step by step.</p>
+<h3 id="references">References</h3>
+<ul>
+<li>
+<p>《模拟CMOS集成电路设计》第2版，【美】毕查德·拉扎维 著，陈贵灿 程军 张瑞智 张鸿 译，陈贵灿 审校</p>
+</li>
+<li>
+<p>EE247， UC Berkeley</p>
+</li>
+</ul>
+
     </div>
 
     
-    <a href="/post/literature_review_1/"  class="summary-link">
-      <div class="article-style">
-        本文调查了已有的一些基于计算机视觉的微小振动检测方法，其中包括传统方法也包括神经网络方法 。
-      </div>
-    </a>
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/switched-capacitor/">switched-capacitor</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
     
-
-    <div class="stream-meta article-metadata">
-
       
-
+      
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  <span >
-      Shuoyu Wang</span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://Gaw4Gura.github.io/post/switched-capacitor_1/&amp;text=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-    
-    Jan 1, 2022
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/category/dissertation/">dissertation</a></span>
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <div class="section-subheading article-title mb-0 mt-0">
-      <a href="/post/hello_world/" >Hello_world</a>
-    </div>
-
-    
-    <a href="/post/hello_world/"  class="summary-link">
-      <div class="article-style">
-        Hello, world! #include &lt;iostream&gt; int main() { std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl; return 0; }  
-      </div>
-    </a>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://Gaw4Gura.github.io/post/switched-capacitor_1/&amp;t=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0&amp;body=https://Gaw4Gura.github.io/post/switched-capacitor_1/" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
-    Dec 30, 2021
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-  
-
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://Gaw4Gura.github.io/post/switched-capacitor_1/&amp;title=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0%20https://Gaw4Gura.github.io/post/switched-capacitor_1/" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://Gaw4Gura.github.io/post/switched-capacitor_1/&amp;title=An%20Introduction%20to%20the%20Switched-Capacitor%20Amplifier%20Circuits%20%e2%85%a0" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
       
+      <a href="https://Gaw4Gura.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu294ce52b7610603a1cc94d74f9d5d999_229881_270x270_fill_q75_lanczos_center.jpg" alt="Shuoyu Wang"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://Gaw4Gura.github.io/">Shuoyu Wang</a></h5>
+      <h6 class="card-subtitle">Bachelor Student, Microelectronics Science and Technology</h6>
+      <p class="card-text">My research interests include analog-to-digital converter, compressed sensing, wireless transmission, and computer vision.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
     </div>
-
-    
-
   </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   
 
-  
 
 
-</div>
+
+
+  </div>
+</article>
   </div>
 
   <div class="page-footer">
