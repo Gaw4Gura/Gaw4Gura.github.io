@@ -5,12 +5,323 @@
     <link>https://Gaw4Gura.github.io/category/dissertation/</link>
       <atom:link href="https://Gaw4Gura.github.io/category/dissertation/index.xml" rel="self" type="application/rss+xml" />
     <description>dissertation</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jan 2022 23:16:56 +0800</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 07 Jan 2022 19:33:01 +0800</lastBuildDate>
     <image>
       <url>https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>dissertation</title>
       <link>https://Gaw4Gura.github.io/category/dissertation/</link>
     </image>
+    
+    <item>
+      <title>位移检测与振动测量</title>
+      <link>https://Gaw4Gura.github.io/post/literature_review_2/</link>
+      <pubDate>Fri, 07 Jan 2022 19:33:01 +0800</pubDate>
+      <guid>https://Gaw4Gura.github.io/post/literature_review_2/</guid>
+      <description>&lt;h2 id=&#34;任务分析&#34;&gt;任务分析&lt;/h2&gt;
+&lt;p&gt;对于该毕业设计的具体任务，暂时做出如下分析：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对待检测目标（以一截钢管代替钢梁）能够实现实时的目标检测与位移测量&lt;/li&gt;
+&lt;li&gt;考虑到实际应用背景中待检测物体振动频率较快，因此为了准确描绘物体运动，这里有两个要求：
+&lt;ul&gt;
+&lt;li&gt;摄像机的帧率（FPS）应该大于物体振动频率的两倍，即采样定理&lt;/li&gt;
+&lt;li&gt;用于检测物体的算法应该足够快速，能够满足高速摄像机的帧率&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;考虑到钢管的位移尺度相对较小，因此算法的测量结果误差应该在1mm以内&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除此之外，考虑到待检测物体（钢管）并没有通用的数据集，因此需要制作自定义的数据集用以训练神经网络，在这个任务中，大约需要200张左右的图片。&lt;/p&gt;
+&lt;h2 id=&#34;目标检测yolo-mobilenet-以及swim-transformer&#34;&gt;目标检测：YOLO, MobileNet, 以及Swim Transformer&lt;/h2&gt;
+&lt;h3 id=&#34;yolo-v3与yolo-tiny&#34;&gt;YOLO v3与YOLO tiny&lt;/h3&gt;
+&lt;p&gt;YOLO v3是目前主流的基于深度学习的目标检测算法之一，其网络结构如下：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_1.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+相较于原先的工作采用的Darknet-19，Darknet-53在精准度上有较大的提升；而相较于采用ResNet结构的工作，Darknet-53又在效率上更胜一筹。下图展示了Darknet-53与其他网络结构的对比：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_2.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+可以看到YOLO v3每秒可以处理78张图片，而Darknet-19每秒可以处理171张图片。下图为YOLO v3网络框图：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_3.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+YOLO v3通过改变卷积的步长来控制卷积层输出的大小，并使用大尺寸特征图检测小尺寸对象和小尺寸特征图检测大尺寸对象的思想，输出为$N\times N\times [3\times (4+1+80)]$，其中N表示输出图像的大小，为$8\times 8$，有三个目标框（anchor框），每个anchor框有四个参数：中心位置$x,y$以及宽高$w,h$，除此之外，还有一个置信度和80维的类别向量。另外，YOLO v3还采用了插值上采样和concat（ResNet）等技巧，实现了良好的性能。
+在训练部分，YOLO v3的训练方式如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;预测框分为三种：正确、错误、忽略&lt;/li&gt;
+&lt;li&gt;任取一个标注为ground truth的数据，与生成的预测框计算Intersection over Union (IoU), IoU最大的预测框即为正确，并且一个预测框只能分配给一个标注为ground truth的数据，类别标签为1，其余为0，置信度为1，产生置信度loss、检测框loss和类别loss&lt;/li&gt;
+&lt;li&gt;除正确的预测框外，与任意一个标注为ground truth的数据的IoU大于0.5的为忽略检测框，不产生loss&lt;/li&gt;
+&lt;li&gt;除正确的预测框外，与所有标注为ground truth的数据的IoU都小于0.5的为错误检测框，置信度为0，产生置信度loss&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;此外，YOLO v3的loss函数为一般的交叉熵函数，而优化器可以使用随机梯度下降优化器或是Adam优化器。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_4.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+上图为YOLO v3 tiny的网络结构，相比于YOLO v3去除了一些特征层，并且只保留两个独立的预测分支，在工程上更为常用，速度也比YOLO v3更快（在1660Ti上实现了100FPS）。&lt;/p&gt;
+&lt;h3 id=&#34;mobilenet-v2&#34;&gt;MobileNet v2&lt;/h3&gt;
+&lt;p&gt;MobileNet v2在v1的基础上进行改进，同样基于深度可分离卷积。深度可分离卷积在Inception卷积的基础上进行构造，将输入进行$1\times 1$的卷积之后分成若干个$3\times 3$的卷积，并在最后进行concat.下图展示了深度可分离卷积Xception的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+MobileNet v2提出了两个新观点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linear Bottlenecks，用于解决ReLU激活函数$\max{x, 0}$造成的非线性问题&lt;/li&gt;
+&lt;li&gt;Inverted residuals，用于提升梯度在乘积层之间的传播能力&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图为MobileNet v2的网络结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_6.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+MobileNet v2仅用CPU就可以实现80ms单张图片的速度。&lt;/p&gt;
+&lt;h3 id=&#34;swim-transformer&#34;&gt;Swim Transformer&lt;/h3&gt;
+&lt;p&gt;swim transformer是一种通用的用于图像处理的transformer结构，在ImageNet-22k上达到了775.2 image/s的吞吐量，并摘得ImageNet多个项目的statement of the art (SOTA).下图为swim transformer的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_7.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+将一张图片分割为少量的window，并在每一个window中做transformer的attention操作，并利用一些技巧提升感受野，达到超过ResNet的效果。目标检测也是swim transformer的经典应用之一。
+swim transformer也有显著的缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;训练轮数要求高，收敛慢&lt;/li&gt;
+&lt;li&gt;对于不同输入尺寸的图片，需要定制transformer结构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图为vision transformer (ViT)的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_11.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+将图像分割成$P\times P$的window，使用全连接层进行patch embedding，加入一维向量表示每个window原本的位置，之后使用multi-head self-attention机制作为网络的主要结构。
+与传统的attention机制相比，multi-head self-attention使用若干不同的变换参数，并进行concat操作。
+$$\text{attention}(Q,V,K)=\text{softmax}\left(\frac{QK^{T}}{\sqrt{d_{k}}}\right)V$$
+$$head_{i}=\text{attention}(QW_{i}^{Q},KW_{i}^{K},VW_{i}^{V})$$
+$$\text{multi-head}(Q,K,V)=\text{concat}(head_{1}, head_{2}, \dots, head_{h})W^{O}$$&lt;/p&gt;
+&lt;h2 id=&#34;一种基于cnn的适用于高速摄像机情景的目标检测方案&#34;&gt;一种基于CNN的适用于高速摄像机情景的目标检测方案&lt;/h2&gt;
+&lt;p&gt;针对例如1000FPS的高速相机，上述几种神经网络的效率都不足以达到实时检测要求。高速成像的摄像机几乎不会错过待检测物体的运动，具有高时间密度和低延迟等优势，而用于此类场景的神经网络也很难具有较高的计算复杂度和网络深度。[*]中提出了一种基于数据清洗和数据集成的用于识别高速摄像机采集的图像中的对象的神经网络，并且给出了一个训练数据集。下图为该工作的框架：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_8.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+其中，数据清洗过程旨在去除尽可能多的错误的region of interest (ROI)区域，以减少后续进行目标识别的工作量。文章中提到的算法为根据预训练网络的输出准备一组ROI图像，并使用支持向量机等方法得到一个评分函数，使用这个评分函数来取舍待识别图像的ROI区域，评估的标准包括了像素值的统计量、像素值的空间导数（拉普拉斯算子等）、物体位置的时间导数（加速度等）等。在目标识别的部分，作者将多个ROI输入以提高检测精度，并通过减少现有的目标识别网络的特征层以牺牲网络的泛化能力为代价提高了网络针对某一特定任务的检测速度。最终，该工作满足了1000FPS的高速相机的应用要求。以下两图为实验中该网络结构的表现：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_9.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_10.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;对于传统的CNN网络结构，为了实现高速实时检测物体运动的目标，需要仔细设计数据集以及输入图像处理的手段，减少神经网络的工作量，并且减少CNN卷积层的数量以提高效率（对于一种特定的任务，这样做对识别精度的影响并不大）。此外，swim transformer也是一大可以探究的应用于高速相机图像实时目标识别的选择。&lt;/p&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1804.02767&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;YOLO v3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/76802514&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;YOLO v3解读&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/93809416&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;YOLO v3及YOLO v3 tiny&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/137971709&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;YOLO v3 tiny代码及运行效率&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1801.04381&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MobileNet v2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/98001811&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;深度可分离卷积&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/u011974639/article/details/79199588&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MobileNet v2解读&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/2103.14030&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;swim transformer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq_41111734/article/details/116353615&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;swim transformer解读&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/amusi1994/article/details/116113351&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;swim transformer实现目标检测&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/weixin_44106928/article/details/110268312&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;vision transformer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/qq_38343151/article/details/102993202&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;multi-head self-attention&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;[*] S. Namiki, K. Yokoyama, S. Yachida, T. Shibata, H. Miyano and M. Ishikawa, &amp;ldquo;Online Object Recognition Using CNN-based Algorithm on High-speed Camera Imaging: Framework for fast and robust high-speed camera object recognition based on population data cleansing and data ensemble,&amp;rdquo; 2020 25th International Conference on Pattern Recognition (ICPR), 2021, pp. 2025-2032, doi: 10.1109/ICPR48806.2021.9413042.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>位移检测与振动测量</title>

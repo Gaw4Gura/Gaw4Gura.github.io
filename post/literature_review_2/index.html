@@ -1,0 +1,1355 @@
+<!DOCTYPE html><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.3.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Shuoyu Wang" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="本文分析位移检测与振动测量毕业设计的具体任务，并介绍了一些常见的用于目标检测的深度学习网络，并在最后介绍了基于高速摄像机采集图像的一种卷积神经网络。" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://Gaw4Gura.github.io/post/literature_review_2/" />
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.f1ecf783c14edc00c9320c205831ad8e.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha512-W0xM4mr6dEP9nREo7Z9z+9X70wytKvMGeDsj7ps2+xg5QPrEBXC8tAW1IFnzjR6eoJ90JmCnFzerQJTLzIEHjA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.7fa18a541b489204d14a3f8fd75bb3b5.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+    <link rel="manifest" href="/manifest.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="https://Gaw4Gura.github.io/post/literature_review_2/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="Academic" />
+  <meta property="og:url" content="https://Gaw4Gura.github.io/post/literature_review_2/" />
+  <meta property="og:title" content="位移检测与振动测量 | Academic" />
+  <meta property="og:description" content="本文分析位移检测与振动测量毕业设计的具体任务，并介绍了一些常见的用于目标检测的深度学习网络，并在最后介绍了基于高速摄像机采集图像的一种卷积神经网络。" /><meta property="og:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" />
+    <meta property="twitter:image" content="https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2022-01-07T19:33:01&#43;08:00"
+      />
+    
+    <meta property="article:modified_time" content="2022-01-07T19:33:01&#43;08:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Gaw4Gura.github.io/post/literature_review_2/"
+  },
+  "headline": "位移检测与振动测量",
+  
+  "datePublished": "2022-01-07T19:33:01+08:00",
+  "dateModified": "2022-01-07T19:33:01+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Shuoyu Wang"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Academic",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "本文分析位移检测与振动测量毕业设计的具体任务，并介绍了一些常见的用于目标检测的深度学习网络，并在最后介绍了基于高速摄像机采集图像的一种卷积神经网络。"
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+  <title>位移检测与振动测量 | Academic</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="48be23a514d6233f8fc3be8f1461afba" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.2da3b1fa37e894630bf6de39b1b694b3.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Academic</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Academic</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>位移检测与振动测量</h1>
+
+  
+  <p class="page-subtitle">文献综述2：任务分析，目标识别神经网络介绍，以及高速摄像机下的目标识别</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      Shuoyu Wang</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 7, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/dissertation/">dissertation</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="任务分析">任务分析</h2>
+<p>对于该毕业设计的具体任务，暂时做出如下分析：</p>
+<ul>
+<li>对待检测目标（以一截钢管代替钢梁）能够实现实时的目标检测与位移测量</li>
+<li>考虑到实际应用背景中待检测物体振动频率较快，因此为了准确描绘物体运动，这里有两个要求：
+<ul>
+<li>摄像机的帧率（FPS）应该大于物体振动频率的两倍，即采样定理</li>
+<li>用于检测物体的算法应该足够快速，能够满足高速摄像机的帧率</li>
+</ul>
+</li>
+<li>考虑到钢管的位移尺度相对较小，因此算法的测量结果误差应该在1mm以内</li>
+</ul>
+<p>除此之外，考虑到待检测物体（钢管）并没有通用的数据集，因此需要制作自定义的数据集用以训练神经网络，在这个任务中，大约需要200张左右的图片。</p>
+<h2 id="目标检测yolo-mobilenet-以及swim-transformer">目标检测：YOLO, MobileNet, 以及Swim Transformer</h2>
+<h3 id="yolo-v3与yolo-tiny">YOLO v3与YOLO tiny</h3>
+<p>YOLO v3是目前主流的基于深度学习的目标检测算法之一，其网络结构如下：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_1.jpg" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+相较于原先的工作采用的Darknet-19，Darknet-53在精准度上有较大的提升；而相较于采用ResNet结构的工作，Darknet-53又在效率上更胜一筹。下图展示了Darknet-53与其他网络结构的对比：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_2.jpg" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+可以看到YOLO v3每秒可以处理78张图片，而Darknet-19每秒可以处理171张图片。下图为YOLO v3网络框图：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_3.jpg" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+YOLO v3通过改变卷积的步长来控制卷积层输出的大小，并使用大尺寸特征图检测小尺寸对象和小尺寸特征图检测大尺寸对象的思想，输出为$N\times N\times [3\times (4+1+80)]$，其中N表示输出图像的大小，为$8\times 8$，有三个目标框（anchor框），每个anchor框有四个参数：中心位置$x,y$以及宽高$w,h$，除此之外，还有一个置信度和80维的类别向量。另外，YOLO v3还采用了插值上采样和concat（ResNet）等技巧，实现了良好的性能。
+在训练部分，YOLO v3的训练方式如下：</p>
+<ul>
+<li>预测框分为三种：正确、错误、忽略</li>
+<li>任取一个标注为ground truth的数据，与生成的预测框计算Intersection over Union (IoU), IoU最大的预测框即为正确，并且一个预测框只能分配给一个标注为ground truth的数据，类别标签为1，其余为0，置信度为1，产生置信度loss、检测框loss和类别loss</li>
+<li>除正确的预测框外，与任意一个标注为ground truth的数据的IoU大于0.5的为忽略检测框，不产生loss</li>
+<li>除正确的预测框外，与所有标注为ground truth的数据的IoU都小于0.5的为错误检测框，置信度为0，产生置信度loss</li>
+</ul>
+<p>此外，YOLO v3的loss函数为一般的交叉熵函数，而优化器可以使用随机梯度下降优化器或是Adam优化器。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_4.jpg" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+上图为YOLO v3 tiny的网络结构，相比于YOLO v3去除了一些特征层，并且只保留两个独立的预测分支，在工程上更为常用，速度也比YOLO v3更快（在1660Ti上实现了100FPS）。</p>
+<h3 id="mobilenet-v2">MobileNet v2</h3>
+<p>MobileNet v2在v1的基础上进行改进，同样基于深度可分离卷积。深度可分离卷积在Inception卷积的基础上进行构造，将输入进行$1\times 1$的卷积之后分成若干个$3\times 3$的卷积，并在最后进行concat.下图展示了深度可分离卷积Xception的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_5.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+MobileNet v2提出了两个新观点：</p>
+<ul>
+<li>Linear Bottlenecks，用于解决ReLU激活函数$\max{x, 0}$造成的非线性问题</li>
+<li>Inverted residuals，用于提升梯度在乘积层之间的传播能力</li>
+</ul>
+<p>下图为MobileNet v2的网络结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_6.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+MobileNet v2仅用CPU就可以实现80ms单张图片的速度。</p>
+<h3 id="swim-transformer">Swim Transformer</h3>
+<p>swim transformer是一种通用的用于图像处理的transformer结构，在ImageNet-22k上达到了775.2 image/s的吞吐量，并摘得ImageNet多个项目的statement of the art (SOTA).下图为swim transformer的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_7.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+将一张图片分割为少量的window，并在每一个window中做transformer的attention操作，并利用一些技巧提升感受野，达到超过ResNet的效果。目标检测也是swim transformer的经典应用之一。
+swim transformer也有显著的缺点：</p>
+<ul>
+<li>训练轮数要求高，收敛慢</li>
+<li>对于不同输入尺寸的图片，需要定制transformer结构</li>
+</ul>
+<p>下图为vision transformer (ViT)的结构：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_11.png" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+将图像分割成$P\times P$的window，使用全连接层进行patch embedding，加入一维向量表示每个window原本的位置，之后使用multi-head self-attention机制作为网络的主要结构。
+与传统的attention机制相比，multi-head self-attention使用若干不同的变换参数，并进行concat操作。
+$$\text{attention}(Q,V,K)=\text{softmax}\left(\frac{QK^{T}}{\sqrt{d_{k}}}\right)V$$
+$$head_{i}=\text{attention}(QW_{i}^{Q},KW_{i}^{K},VW_{i}^{V})$$
+$$\text{multi-head}(Q,K,V)=\text{concat}(head_{1}, head_{2}, \dots, head_{h})W^{O}$$</p>
+<h2 id="一种基于cnn的适用于高速摄像机情景的目标检测方案">一种基于CNN的适用于高速摄像机情景的目标检测方案</h2>
+<p>针对例如1000FPS的高速相机，上述几种神经网络的效率都不足以达到实时检测要求。高速成像的摄像机几乎不会错过待检测物体的运动，具有高时间密度和低延迟等优势，而用于此类场景的神经网络也很难具有较高的计算复杂度和网络深度。[*]中提出了一种基于数据清洗和数据集成的用于识别高速摄像机采集的图像中的对象的神经网络，并且给出了一个训练数据集。下图为该工作的框架：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_8.gif" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+其中，数据清洗过程旨在去除尽可能多的错误的region of interest (ROI)区域，以减少后续进行目标识别的工作量。文章中提到的算法为根据预训练网络的输出准备一组ROI图像，并使用支持向量机等方法得到一个评分函数，使用这个评分函数来取舍待识别图像的ROI区域，评估的标准包括了像素值的统计量、像素值的空间导数（拉普拉斯算子等）、物体位置的时间导数（加速度等）等。在目标识别的部分，作者将多个ROI输入以提高检测精度，并通过减少现有的目标识别网络的特征层以牺牲网络的泛化能力为代价提高了网络针对某一特定任务的检测速度。最终，该工作满足了1000FPS的高速相机的应用要求。以下两图为实验中该网络结构的表现：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_9.gif" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="./fig_10.gif" alt="" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>对于传统的CNN网络结构，为了实现高速实时检测物体运动的目标，需要仔细设计数据集以及输入图像处理的手段，减少神经网络的工作量，并且减少CNN卷积层的数量以提高效率（对于一种特定的任务，这样做对识别精度的影响并不大）。此外，swim transformer也是一大可以探究的应用于高速相机图像实时目标识别的选择。</p>
+<h3 id="references">References</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener">YOLO v3</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/76802514" target="_blank" rel="noopener">YOLO v3解读</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/93809416" target="_blank" rel="noopener">YOLO v3及YOLO v3 tiny</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/137971709" target="_blank" rel="noopener">YOLO v3 tiny代码及运行效率</a></li>
+<li><a href="https://arxiv.org/abs/1801.04381" target="_blank" rel="noopener">MobileNet v2</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/98001811" target="_blank" rel="noopener">深度可分离卷积</a></li>
+<li><a href="https://blog.csdn.net/u011974639/article/details/79199588" target="_blank" rel="noopener">MobileNet v2解读</a></li>
+<li><a href="https://arxiv.org/abs/2103.14030" target="_blank" rel="noopener">swim transformer</a></li>
+<li><a href="https://blog.csdn.net/qq_41111734/article/details/116353615" target="_blank" rel="noopener">swim transformer解读</a></li>
+<li><a href="https://blog.csdn.net/amusi1994/article/details/116113351" target="_blank" rel="noopener">swim transformer实现目标检测</a></li>
+<li><a href="https://blog.csdn.net/weixin_44106928/article/details/110268312" target="_blank" rel="noopener">vision transformer</a></li>
+<li><a href="https://blog.csdn.net/qq_38343151/article/details/102993202" target="_blank" rel="noopener">multi-head self-attention</a></li>
+</ul>
+<p>[*] S. Namiki, K. Yokoyama, S. Yachida, T. Shibata, H. Miyano and M. Ishikawa, &ldquo;Online Object Recognition Using CNN-based Algorithm on High-speed Camera Imaging: Framework for fast and robust high-speed camera object recognition based on population data cleansing and data ensemble,&rdquo; 2020 25th International Conference on Pattern Recognition (ICPR), 2021, pp. 2025-2032, doi: 10.1109/ICPR48806.2021.9413042.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/yolo/">YOLO</a>
+  
+  <a class="badge badge-light" href="/tag/cnn/">CNN</a>
+  
+  <a class="badge badge-light" href="/tag/high-speed-camera/">High-Speed Camera</a>
+  
+</div>
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://Gaw4Gura.github.io/post/literature_review_2/&amp;text=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://Gaw4Gura.github.io/post/literature_review_2/&amp;t=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f&amp;body=https://Gaw4Gura.github.io/post/literature_review_2/" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://Gaw4Gura.github.io/post/literature_review_2/&amp;title=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f%20https://Gaw4Gura.github.io/post/literature_review_2/" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://Gaw4Gura.github.io/post/literature_review_2/&amp;title=%e4%bd%8d%e7%a7%bb%e6%a3%80%e6%b5%8b%e4%b8%8e%e6%8c%af%e5%8a%a8%e6%b5%8b%e9%87%8f" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    <script src="/js/vendor-bundle.min.b73dfaac3b6499dc997741748a7c3fe2.js"></script>
+
+    
+    
+    
+      
+      
+        <script src="https://cdn.jsdelivr.net/gh/desandro/imagesloaded@v4.1.4/imagesloaded.pkgd.min.js" integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/metafizzy/isotope@v3.0.6/dist/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+
+      
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/highlight.min.js" integrity="sha512-Ypjm0o7jOxAd4hpdoppSEN0TQOC19UtPAqD+4s5AlXmUvbmmS/YMxYqAqarQYyxTnB6/rqip9qcxlNB/3U9Wdg==" crossorigin="anonymous"></script>
+        
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/r.min.js" crossorigin="anonymous"></script>
+        
+      
+
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.7cd6ec29d281a73c92a2958a1584aadc.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>
