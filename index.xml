@@ -631,22 +631,6 @@ Similarly, we can design a switched-capacitor circuits with differential inputs.
     </item>
     
     <item>
-      <title>Hello_world</title>
-      <link>https://Gaw4Gura.github.io/post/hello_world/</link>
-      <pubDate>Thu, 30 Dec 2021 22:50:25 +0800</pubDate>
-      <guid>https://Gaw4Gura.github.io/post/hello_world/</guid>
-      <description>&lt;h1 id=&#34;hello-world&#34;&gt;Hello, world!&lt;/h1&gt;
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include &amp;lt;iostream&amp;gt;
-
-int main() {
-    std::cout &amp;lt;&amp;lt; &amp;quot;Hello, world!&amp;quot; &amp;lt;&amp;lt; std::endl;
-    return 0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
       <title></title>
       <link>https://Gaw4Gura.github.io/admin/config.yml</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
