@@ -13,7 +13,138 @@
     </image>
     
     <item>
-      <title>An Introduction to the Switched-Capacitor Amplifier Circuits Ⅰ</title>
+      <title>The Design of the Switched-Capaitor Amplifier</title>
+      <link>https://Gaw4Gura.github.io/post/switched-capacitor_2/</link>
+      <pubDate>Fri, 07 Jan 2022 22:16:10 +0800</pubDate>
+      <guid>https://Gaw4Gura.github.io/post/switched-capacitor_2/</guid>
+      <description>&lt;h2 id=&#34;sample-phase&#34;&gt;Sample Phase&lt;/h2&gt;
+&lt;p&gt;The following figure demonstrates the equivalent circuit and the thermal noise of the sample phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_1.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+There are six swichtes, each of them has a thermal noise of $kT/C$, so the overall thermal noise is $v_{n,s}^{2}=6\frac{kT}{C_{in}}$. One chooses the transmission gates as the switches, so the equivalent resistance is $R_{on, eq}=\frac{1}{\mu_{n}C_{ox}(W/L)_{N}(V_{DD}-V_{THN})-\mu_{p}C_{ox}(W/L)_{P}\vert V_{THP}\vert}$. Here, one assumes $\mu_{n}C_{ox}(W/L)_{N}=\mu_{p}C_{ox}(W/L)_{P}$.&lt;/p&gt;
+&lt;h2 id=&#34;hold-phase&#34;&gt;Hold Phase&lt;/h2&gt;
+&lt;p&gt;The following figure elaborates the equivalent circuit and the thermal noise of the hold phase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_2.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+One assumes $C_{f}=C_{in}$, so the feedback cofficient of the switched-capacitor circuit is $f=\frac{1}{C_{f}+C_{in}}=1/2$. For long channel devices, $\gamma=2/3$, so if one assumes the load transistor has the same $g_{m}$ with the input transistor, the thermal noise $dv_{n,noise}^{2}=\frac{16kT}{3g_{m}}$. The bandwith of the noise is $\frac{g_{m}}{4C_{L}}$, where the load capacitance $C_{L}=a C_{in}$ (one ignores the input parasitic capacitance $C_{p}$). Here, $a$ is a cofficient related to the speed of the circuit (one assumes $a=1$). The larger the $W/L$ of the input transistor, the larger the $GBW=g_{m}/C_{L}$. Apparently, $R_{on, eq}$ and $C_{in}$ contributes a pole $R_{on,eq}C_{in}$, one assumes $R_{on,eq}C_{in}\le \frac{1}{10}\frac{C_{L}}{g_{m}}$.&lt;/p&gt;
+&lt;p&gt;The following figure illustrates the choice of the capacitance (at 300K, i.e. room temperature) and the magnitude of the direct-current gain of the amplifier.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_3.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+One assumes the overdrive voltage $V_{eff}=V_{DSAT}=0.2V$ and $t_{setup}=-\ln\left(\frac{1}{2^{10}\cdot 4}\right)\tau$ where $\tau=R_{on, eq}C$. As $R_{on, eq}=\frac{1}{10g_{m}}$ and $g_{m}=\frac{2I_{SS}}{V_{DSAT}}$, so $2I_{SS}=1\text{mA}$ and $GBW=\frac{1}{2\pi}\frac{g_{m}}{C_{L}}=0.83\text{GHz}$.&lt;/p&gt;
+&lt;p&gt;One chooses the following structure to meet the demand of 80dB direct-current gain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_4.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+One chooses the folded cascode OPAMP for the auxiliary amplifiers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+Because one has not found a 65nm PDK yet, so it is hard for one to calculate the accurate sizes of the MOSFETs. However, one can know that $g_{m1,2}=\frac{2I_{SS}}{V_{DSAT}}$, so one can work out the sizes of M1 and M2 by $g_{m}=\sqrt{2\mu_{p}C_{ox}\left(\frac{W}{L}\right)_{1,2}I_{D}}$. Similarly, one can figure out the sizes of other MOSFETs by $\left(\frac{W}{L}\right)=\frac{I_{D}}{\mu C_{ox}V_{eff}^{2}}$.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;As von Neumann&amp;rsquo;s celebrated quotes, &amp;ldquo;Young man, in mathematics you don&amp;rsquo;t understand things. You just get used to them.&amp;rdquo; In learning the design of analog circuits, one also begins with imitating others&#39; works, and finally figures out one&amp;rsquo;s own designs.&lt;/p&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://d.wanfangdata.com.cn/thesis/Y1185950&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SC amplifier for a 14-bit 80MHz pipeline ADC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.doczj.com/doc/2f26a58102d276a200292e13-2.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;setup period for an ADC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Introduction to the Switched-Capacitor Amplifier Circuits</title>
       <link>https://Gaw4Gura.github.io/post/switched-capacitor_1/</link>
       <pubDate>Mon, 03 Jan 2022 21:06:41 +0800</pubDate>
       <guid>https://Gaw4Gura.github.io/post/switched-capacitor_1/</guid>
