@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>analog-to-digital converter | Academic</title>
+    <link>https://Gaw4Gura.github.io/category/analog-to-digital-converter/</link>
+      <atom:link href="https://Gaw4Gura.github.io/category/analog-to-digital-converter/index.xml" rel="self" type="application/rss+xml" />
+    <description>analog-to-digital converter</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 10 Jan 2022 19:01:38 +0800</lastBuildDate>
+    <image>
+      <url>https://Gaw4Gura.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>analog-to-digital converter</title>
+      <link>https://Gaw4Gura.github.io/category/analog-to-digital-converter/</link>
+    </image>
+    
+    <item>
+      <title>Implement the Linear-Exponential Incremental Converter in MATLAB SIMULINK Ⅰ</title>
+      <link>https://Gaw4Gura.github.io/post/idc_simulink_1/</link>
+      <pubDate>Mon, 10 Jan 2022 19:01:38 +0800</pubDate>
+      <guid>https://Gaw4Gura.github.io/post/idc_simulink_1/</guid>
+      <description>&lt;p&gt;As one mentioned in the previous post, the transfer function of a switched-capacitor circuit is $H(z)=\frac{1}{z-1}$, which is easy to implement by a &lt;em&gt;Discrete Transfer Fcn&lt;/em&gt; module in the MATLAB SIMULINK. One can build an 1-bit switched-capacitor S/H circuit with a feedback gain of -1 as follows.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_1.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Here, one employs a &lt;em&gt;zero-order hold&lt;/em&gt; module to simulate the oversampling procedure.&lt;/p&gt;
+&lt;p&gt;One assumes that the input sine signal has a frequency of 1 rad/sec, the following figure shows the result of the S/H circuit.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_2.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;As one may see, the approximation is literally not accurate. However, as one enable the zero-order hold (the oversampling rate is 4, i.e. $\frac{1}{4f}=\frac{1}{4\times 2\pi}$), one will find the measurements become more precise.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_3.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;To be more specific, one can implement a 8kHz A/D conversion rate $\Sigma\Delta$ modulator at a sampling rate of 512kHz.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_4.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_5.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Similarly, one can conduct the behavioral simulation of an incremental data converter as follows.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_6.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Here, the constant $\frac{1}{32}=\frac{1!}{N}\cdot 2V_{ref}$ and one assumes that this is a 64 clock cycles incremental data converter while the reference voltage is equal to 1V. The following figure describes the result of one&amp;rsquo;s incremental data converter.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./fig_7.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ww2.mathworks.cn/help/dsp/ug/sigma-delta-a-d-conversion.html;jsessionid=8c4198027ed786f0fd0bc0ac3642&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;$\Sigma\Delta$ modulator, MathWorks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Antonio W. A. Soares, Diomadson R. Belforf, Sebastian Y. C. Catunda, and Raimundo C. S. Freire. 2015. Analysis and System-Level Design of a High Resolution Incremental ΣΔ ADC for Biomedical Applications. In&lt;/em&gt; &lt;em&gt;Proceedings of the 28th Symposium on Integrated Circuits and Systems Design&lt;/em&gt; &lt;em&gt;(&lt;strong&gt;SBCCI &amp;lsquo;15&lt;/strong&gt;). Association for Computing Machinery, New York, NY, USA, Article 36, 1–6. DOI:https://doi.org/10.1145/2800986.2800998&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
