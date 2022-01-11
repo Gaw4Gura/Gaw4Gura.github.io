@@ -745,7 +745,7 @@
 <li>考虑到钢管的位移尺度相对较小，因此算法的测量结果误差应该在1mm以内</li>
 </ul>
 <p>除此之外，考虑到待检测物体（钢管）并没有通用的数据集，因此需要制作自定义的数据集用以训练神经网络，在这个任务中，大约需要200张左右的图片。</p>
-<h2 id="目标检测yolo-mobilenet-以及swim-transformer">目标检测：YOLO, MobileNet, 以及Swim Transformer</h2>
+<h2 id="目标检测yolo-mobilenet-以及swin-transformer">目标检测：YOLO, MobileNet, 以及Swin Transformer</h2>
 <h3 id="yolo-v3与yolo-tiny">YOLO v3与YOLO tiny</h3>
 <p>YOLO v3是目前主流的基于深度学习的目标检测算法之一，其网络结构如下：
 
@@ -895,8 +895,8 @@ MobileNet v2提出了两个新观点：</p>
   </div></figure>
 
 MobileNet v2仅用CPU就可以实现80ms单张图片的速度。</p>
-<h3 id="swim-transformer">Swim Transformer</h3>
-<p>swim transformer是一种通用的用于图像处理的transformer结构，在ImageNet-22k上达到了775.2 image/s的吞吐量，并摘得ImageNet多个项目的statement of the art (SOTA).下图为swim transformer的结构：
+<h3 id="swin-transformer">Swin Transformer</h3>
+<p>swin transformer是一种通用的用于图像处理的transformer结构，在ImageNet-22k上达到了775.2 image/s的吞吐量，并摘得ImageNet多个项目的statement of the art (SOTA).下图为swin transformer的结构：
 
 
 
@@ -918,8 +918,8 @@ MobileNet v2仅用CPU就可以实现80ms单张图片的速度。</p>
     <div class="w-100" ><img src="./fig_7.png" alt="" loading="lazy" data-zoomable /></div>
   </div></figure>
 
-将一张图片分割为少量的window，并在每一个window中做transformer的attention操作，并利用一些技巧提升感受野，达到超过ResNet的效果。目标检测也是swim transformer的经典应用之一。
-swim transformer也有显著的缺点：</p>
+将一张图片分割为少量的window，并在每一个window中做transformer的attention操作，并利用一些技巧提升感受野，达到超过ResNet的效果。目标检测也是swin transformer的经典应用之一。
+swin transformer也有显著的缺点：</p>
 <ul>
 <li>训练轮数要求高，收敛慢</li>
 <li>对于不同输入尺寸的图片，需要定制transformer结构</li>
@@ -1018,7 +1018,7 @@ $$\text{multi-head}(Q,K,V)=\text{concat}(head_{1}, head_{2}, \dots, head_{h})W^{
   </div></figure>
 </p>
 <h2 id="conclusion">Conclusion</h2>
-<p>对于传统的CNN网络结构，为了实现高速实时检测物体运动的目标，需要仔细设计数据集以及输入图像处理的手段，减少神经网络的工作量，并且减少CNN卷积层的数量以提高效率（对于一种特定的任务，这样做对识别精度的影响并不大）。此外，swim transformer也是一大可以探究的应用于高速相机图像实时目标识别的选择。</p>
+<p>对于传统的CNN网络结构，为了实现高速实时检测物体运动的目标，需要仔细设计数据集以及输入图像处理的手段，减少神经网络的工作量，并且减少CNN卷积层的数量以提高效率（对于一种特定的任务，这样做对识别精度的影响并不大）。此外，swin transformer也是一大可以探究的应用于高速相机图像实时目标识别的选择。</p>
 <h3 id="references">References</h3>
 <ul>
 <li><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener">YOLO v3</a></li>
@@ -1028,9 +1028,9 @@ $$\text{multi-head}(Q,K,V)=\text{concat}(head_{1}, head_{2}, \dots, head_{h})W^{
 <li><a href="https://arxiv.org/abs/1801.04381" target="_blank" rel="noopener">MobileNet v2</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/98001811" target="_blank" rel="noopener">深度可分离卷积</a></li>
 <li><a href="https://blog.csdn.net/u011974639/article/details/79199588" target="_blank" rel="noopener">MobileNet v2解读</a></li>
-<li><a href="https://arxiv.org/abs/2103.14030" target="_blank" rel="noopener">swim transformer</a></li>
-<li><a href="https://blog.csdn.net/qq_41111734/article/details/116353615" target="_blank" rel="noopener">swim transformer解读</a></li>
-<li><a href="https://blog.csdn.net/amusi1994/article/details/116113351" target="_blank" rel="noopener">swim transformer实现目标检测</a></li>
+<li><a href="https://arxiv.org/abs/2103.14030" target="_blank" rel="noopener">swin transformer</a></li>
+<li><a href="https://blog.csdn.net/qq_41111734/article/details/116353615" target="_blank" rel="noopener">swin transformer解读</a></li>
+<li><a href="https://blog.csdn.net/amusi1994/article/details/116113351" target="_blank" rel="noopener">swin transformer实现目标检测</a></li>
 <li><a href="https://blog.csdn.net/weixin_44106928/article/details/110268312" target="_blank" rel="noopener">vision transformer</a></li>
 <li><a href="https://blog.csdn.net/qq_38343151/article/details/102993202" target="_blank" rel="noopener">multi-head self-attention</a></li>
 </ul>
@@ -1050,6 +1050,8 @@ $$\text{multi-head}(Q,K,V)=\text{concat}(head_{1}, head_{2}, \dots, head_{h})W^{
   <a class="badge badge-light" href="/tag/yolo/">YOLO</a>
   
   <a class="badge badge-light" href="/tag/cnn/">CNN</a>
+  
+  <a class="badge badge-light" href="/tag/swin-transformer/">swin transformer</a>
   
   <a class="badge badge-light" href="/tag/high-speed-camera/">High-Speed Camera</a>
   
